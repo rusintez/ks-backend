@@ -12,11 +12,10 @@ var port = 3000; // TODO: move to config
  * Module dependencies.
  */
 
-var express = require('express'),
-    socketio = require('socket.io'),
-    http    = require('http');
-
-require('colors');
+var express   = require('express'),
+    socketio  = require('socket.io'),
+    http      = require('http');
+                require('colors');
 
 
 /**
@@ -34,10 +33,10 @@ io.set('transports', ['xhr-polling']);
 
 
 /*
- * Serve static files
+ * Don't serve static files here
  */
 
-app.use(express.static(__dirname + '/build'));
+// app.use(express.static(__dirname + '/build'));
 
 
 /*
@@ -60,7 +59,8 @@ app.use(function(req, res, next){
 exports = module.exports = {
   app: app,
   server: server,
-  socketio: io
+  socketio: io,
+  express: express
 };
 
 
