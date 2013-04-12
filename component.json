@@ -1,5 +1,6 @@
 {
   "name": "ks-backend",
+  "repo": "rusintez/ks-backend",
   "version": "0.0.1",
   "description": "KS backend",
   "keywords": []
