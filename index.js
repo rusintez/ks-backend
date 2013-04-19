@@ -5,7 +5,7 @@
  * Copyright(c) 2013 Vladimir Popov rusintez@gmail.com
  */
 
-var port = 3000; // TODO: move to config
+var port = global.ks_port || 3000;
 
 
 /**
