@@ -5,8 +5,6 @@
  * Copyright(c) 2013 Vladimir Popov rusintez@gmail.com
  */
 
-var port = global.ks_port || 3000;
-
 
 /**
  * Module dependencies.
@@ -26,7 +24,7 @@ var app     = express(),
     server  = http.createServer(app),
     io      = socketio.listen(server);
 
-server.listen(port);
+// server.listen(port);
 
 io.set('log level', 1);
 io.set('transports', ['xhr-polling']);
@@ -64,4 +62,4 @@ exports = module.exports = {
 };
 
 
-console.log('Server is listening on port', port, '\n');
+// console.log('Server is listening on port', port, '\n');
