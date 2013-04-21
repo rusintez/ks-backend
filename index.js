@@ -12,7 +12,8 @@
 
 var express   = require('express'),
     socketio  = require('socket.io'),
-    http      = require('http');
+    http      = require('http'),
+    fs        = require('fs');
                 require('colors');
 
 
@@ -25,16 +26,10 @@ var app     = express(),
     io      = socketio.listen(server);
 
 // server.listen(port);
+app.enable('strict routing');
 
 io.set('log level', 1);
 io.set('transports', ['xhr-polling']);
-
-
-/*
- * Don't serve static files here
- */
-
-// app.use(express.static(__dirname + '/build'));
 
 
 /*
@@ -51,6 +46,27 @@ app.use(function(req, res, next){
 
 
 /*
+ * Never go down
+ * Write to error log
+ */
+
+process.on('uncaughtException', function(err) {
+  console.log(JSON.stringify(err));
+  fs.createWriteStream('./error.log', {'flags': 'a'}).write(err.toString() + '\n');
+});
+
+
+/*
+ * Mount apps
+ */
+
+var mount = function(namespace, application) {
+  app.all(namespace, function(req, res) { res.redirect(namespace + '/'); });
+  app.use(namespace + '/', application(io.of(namespace)));
+}
+
+
+/*
  * Exports
  */
 
@@ -58,8 +74,6 @@ exports = module.exports = {
   app: app,
   server: server,
   socketio: io,
-  express: express
+  express: express,
+  mount: mount
 };
-
-
-// console.log('Server is listening on port', port, '\n');
